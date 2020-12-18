@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Client data</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="bootstrap.js"></script>
+	<script type="text/javascript" src="myscript.js"></script>
+	<script type="text/javascript" src="jquery.session.js"></script>
+	<link rel="stylesheet" type="text/css" href="tabstyle.css">
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+
+	
+</head>
+<body>
+	<div class="container">
+	<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="tab">
+  <button class="tablinks" onclick="GetTable(event, 'Home')">Home</button>	
+  <button class="tablinks" onclick="GetTable(event, 'Create')">Create Post</button>
+  <button class="tablinks" onclick="GetTable(event, 'update')">Update Post</button>
+  <button class="tablinks" onclick="GetTable(event, 'Modify')">Update Comment</button>
+  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <button id="welcome"></button> 
+  &nbsp &nbsp &nbsp <button id="logout">Logout</button>
+
+  
+</div>
+<div id="Create" class="tabcontent">
+ <table class="table table-bordered">
+		<tr>
+			<td>
+				Post
+			</td>
+			<td>
+				<textarea rows="4" cols="50" id="postDetails"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<button id="saveBtn">Create</button>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div id="update" class="tabcontent">
+   <table class="table table-bordered">
+		<tr>
+			<td>
+				Post Id
+			</td>
+			<td>
+				<input type="text" id="upPostId" readonly="">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Post Details
+			</td>
+			<td>
+				<textarea rows="4" cols="50" id="upPostDetails"></textarea>
+				
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<button id="updateBtn">Update Post</button>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div id="Modify" class="tabcontent">
+   <table class="table table-bordered">
+		<tr>
+			<td>
+				Post
+			</td>
+			<td>
+				<input type="text" id="upPost" readonly="">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Comment
+			</td>
+			<td>
+				<textarea rows="4" cols="50" id="upCommentDetails"></textarea>
+				<input type="text" id="hiddenCommentId" hidden="">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<button id="modifyBtn">Update Comment</button>
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+	<p id="msg"></p>
+	<p id="msg2"></p>
+	<br><hr>
+	<div id="search">
+		<input type="text" placeholder="Search by Id" class="search" id="postId">
+		<button id="refreshBtn">Refresh</button>
+	</div>
+
+	
+	<table class="table table-bordered table-hover table-striped" id="postList">
+		
+		<thead>
+			<tr>
+				<th>
+					Post Id
+				</th>
+				<th>
+					Post Deatils
+				</th>
+				<th colspan="3"></th>
+			</tr>
+		</thead>
+		<tbody>
+			
+		</tbody>
+	</table>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+	<b>Post Details:</b> <br><textarea rows="2" cols="74" style="" id="getPost" readonly=""></textarea>
+	<input type="text" id="hiddenPostId" hidden="">
+	<hr>
+	<div id="searchComment">
+		<input type="text" placeholder="Search by Comment Id" class="searchComment" id="commentId">
+		<button id="commentRefreshBtn">Refresh</button> &nbsp &nbsp &nbsp
+		<input style="width:220px;" type="text" placeholder="Add Comment" class="addComment" >
+		<button id="addCommentBtn">Add</button>
+	</div>
+	<table class="table table-bordered table-hover table-striped" id="commentList">
+		
+				
+			
+		<thead>
+			<tr>
+				<th>
+					Comment Id
+				</th>
+				<th>
+					Comments
+				</th>
+				<th colspan="2"></th>
+			</tr>
+		</thead>
+		<tbody>
+			
+		</tbody>
+	</table>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+<script>
+function GetTable(evt, actionName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(actionName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+
+
+</body>
+</html>
