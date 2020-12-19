@@ -4,7 +4,7 @@ $("#login").click(function(){
 });
 
 $("#createAccount").click(function(){
-	window.location.href = "file:///C:/xampp/htdocs/Final%20ATP2%20Assignment%20-%20Copy/Final-ATP2-Assignment-CLIENT/signup.html";		
+	window.location.href = "file:///C:/xampp/htdocs/Final%20Assignment%20ATP/Final-Assignment-Post-Comment-Client/signup.html";		
 });
 var login=function(){
 
@@ -23,7 +23,7 @@ var login=function(){
 								$.session.set('user', $("#username").val());
 								$.session.set('pass', $("#password").val());
 								
-								window.location.href = "file:///C:/xampp/htdocs/Final%20ATP2%20Assignment%20-%20Copy/Final-ATP2-Assignment-CLIENT/posts.html";
+								window.location.href = "file:///C:/xampp/htdocs/Final%20Assignment%20ATP/Final-Assignment-Post-Comment-Client/posts.html";
 							}
 						
 							else{

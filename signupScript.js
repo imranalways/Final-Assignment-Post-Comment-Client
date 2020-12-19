@@ -5,7 +5,7 @@ $("#signup").click(function(){
 });
 
 $("#back").click(function(){
-	window.location.href = "file:///C:/xampp/htdocs/Final%20ATP2%20Assignment%20-%20Copy/Final-ATP2-Assignment-CLIENT/index.html";		
+	window.location.href = "file:///C:/xampp/htdocs/Final%20Assignment%20ATP/Final-Assignment-Post-Comment-Client/index.html";		
 });
 
 var userLid=function(){
@@ -46,7 +46,7 @@ var signup=function(){
 						if($("#name").val()!="" && $("#password").val()!=""){
 							if(xmlhttp.status==200){
 								$("#msg").html(xmlhttp.status+":"+ xmlhttp.statusText);
-								window.location.href = "file:///C:/xampp/htdocs/Final%20ATP2%20Assignment%20-%20Copy/Final-ATP2-Assignment-CLIENT/index.html";
+								window.location.href = "file:///C:/xampp/htdocs/Final%20Assignment%20ATP/Final-Assignment-Post-Comment-Client/index.html";
 							}
 						
 							else{

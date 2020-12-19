@@ -29,7 +29,7 @@ $("#logout").click(function(){
 	$("#upCommentDetails").val("");
 	sessionStorage.removeItem('user');
 	sessionStorage.removeItem('pass');
-	window.location.href = "file:///C:/xampp/htdocs/Final%20ATP2%20Assignment%20-%20Copy/Final-ATP2-Assignment-CLIENT/index.html";
+	window.location.href = "file:///C:/xampp/htdocs/Final%20Assignment%20ATP/Final-Assignment-Post-Comment-Client/index.html";
 });
 
 $("#commentRefreshBtn").click(function(){
@@ -60,14 +60,14 @@ $("#commentRefreshBtn").click(function(){
 				var str;
 				for (var i = 0; i < data.length; i++) {
 
-					str+="<tr><td>"+data[i].postId+"</td><td>"+data[i].postDetails+"</td><td><button btn-id-post="+data[i].postId+" id='DeleteBtn'>Delete</button></td><td><button btn-id-postId="+data[i].postId+" id='loadBtn'>Load</button></td><td><button btn-id-postId="+data[i].postId+" id='viewBtn'>Comments</button></td></tr>"
+					str+="<tr><td>"+data[i].postId+"</td><td>"+data[i].postDetails+"</td><td><button btn-id-user="+data[i].lid+" btn-id-post="+data[i].postId+" id='DeleteBtn'>Delete</button></td><td><button btn-id-postId="+data[i].postId+" id='loadBtn'>Load</button></td><td><button btn-id-postId="+data[i].postId+" id='viewBtn'>Comments</button></td></tr>"
 				}
 				$("#postList tbody").html(str);
-				$("#welcome").html("Welcome! "+ $.session.get('user'));
+				$("#welcome").html("<b>Welcome! "+ $.session.get('user')+"</b>");
 			}
 			else{
 				
-				window.location.href = "file:///C:/xampp/htdocs/Final%20ATP2%20Assignment%20-%20Copy/Final-ATP2-Assignment-CLIENT/index.html";
+				window.location.href = "file:///C:/xampp/htdocs/Final%20Assignment%20ATP/Final-Assignment-Post-Comment-Client/index.html";
 			}
 		}
 	});
@@ -123,7 +123,7 @@ var createPost=function(){
 				}
 			}
 			else{
-				$("#msg").html("Enter Post Details");
+				$("#msg").html("<b>Enter Post Details</b>");
 			}
 		}
 	});
@@ -134,13 +134,14 @@ var createPost=function(){
 		$("#postList").on("click","#DeleteBtn",function(){
 			var button=$(this);
 			if(confirm("Are you sure you want to delete this Post?")) {
+			if(button.attr("btn-id-user")==$.session.get('user')){
 			$.ajax({
 			url:"http://localhost:53091/api/Posts/"+button.attr("btn-id-post"),
 			method:"Delete",
-			header:"Content-Type:application/json",
+			/*header:"Content-Type:application/json",
 			data:{
 				lid:$.session.get('user')
-			},
+			},*/
 			complete:function(xmlhttp,status){
 
 			if(xmlhttp.status==204){
@@ -150,13 +151,22 @@ var createPost=function(){
 				$("#commentList tbody").html("");
 				$("#upPostId").val("");
 				$("#upPostDetails").val("");
+				$("#msg").html("");
+				$("#msg2").html("");
+
+
 			}
 			else{
+				$("#msg").html(xmlhttp.status+":"+ xmlhttp.statusText);
 				
-				$("#msg2").html("You are not allowed to delete someones post");
+				
 			}
 		}
 		});
+	}
+	else{
+		$("#msg").html("<b>You are not allowed to delete someones post</b>");
+	}
 		
 		}
 		
@@ -176,13 +186,13 @@ var createPost=function(){
 			if(xmlhttp.status==200){
 				var data=xmlhttp.responseJSON;
 				var str;
-				str="<tr><td>"+data.postId+"</td><td>"+data.postDetails+"</td><td><button btn-id-post="+data.postId+" id='DeleteBtn'>Delete</button></td><td><button btn-id-postId="+data.postId+" id='loadBtn'>Load</button></td><td><button btn-id-postId="+data.postId+" id='viewBtn'>Comments</button></td></tr>"
+				str="<tr><td>"+data.postId+"</td><td>"+data.postDetails+"</td><td><button btn-id-user="+data[i].lid+" btn-id-post="+data.postId+" id='DeleteBtn'>Delete</button></td><td><button btn-id-postId="+data.postId+" id='loadBtn'>Load</button></td><td><button btn-id-postId="+data.postId+" id='viewBtn'>Comments</button></td></tr>"
 				$("#postList tbody").html(str);
 				$("#msg").html("");
 			}
 			else{
-				$("#msg").html(xmlhttp.status+":"+ xmlhttp.statusText);
-				$("#postList tbody").html("");
+				
+				$("#postList tbody").html("No Data Found");
 			}
 			}
 			else{
@@ -224,7 +234,7 @@ var createPost=function(){
 				}
 			}
 			else{
-				$("#msg").html("Fields can't be empty");
+				$("#msg").html("<b>Fields can't be empty</b>");
 			}
 		}
 		});
@@ -250,7 +260,7 @@ $("#postList").on("click","#loadBtn",function(){
 				$("#msg").html("");
 			}
 			else{
-				$("#msg2").html("You are not allowed");
+				$("#msg").html("<b>You are not allowed</b>");
 			}
 			}
 			else{
@@ -300,7 +310,7 @@ $("#postList").on("click","#viewBtn",function(){
 						
 						$("#getPost").val(data.postDetails);
 						$("#hiddenPostId").val(data.postId);
-						$("#commentList tbody").html("How lucky!! You can do the first comment");
+						$("#commentList tbody").html("<b>How lucky!! You can do the first comment</b>");
 					}
 				});
 			}
@@ -327,16 +337,16 @@ $("#postList").on("click","#viewBtn",function(){
 				var data=xmlhttp.responseJSON;
 				var str;
 				for (var i = 0; i < data.length; i++) {
-					str+="<tr><td>"+data[i].commentId+"</td><td>"+data[i].commentDetails+"</td><td><button btn-id="+data[i].commentId+" id='DeleteBtn'>Delete</button></td><td><button btn-id-commentId="+data[i].commentId+" id='loadBtn'>Load</button></td></tr>"
+					str+="<tr><td>"+data[i].commentId+"</td><td>"+data[i].commentDetails+"</td><td><button btn-lid-user="+data[i].lid+" btn-id="+data[i].commentId+" id='DeleteBtn'>Delete</button></td><td><button btn-id-commentId="+data[i].commentId+" id='loadBtn'>Load</button></td></tr>"
 				}
 				
 				$("#commentList tbody").html(str);
 				$("#msg").html("");
 			}
 			else{
-				$("#msg").html(xmlhttp.status+":"+ xmlhttp.statusText);
+				//$("#msg").html(xmlhttp.status+":"+ xmlhttp.statusText);
 				
-				$("#commentList tbody").html("");
+				$("#commentList tbody").html("No data Found");
 			}
 		}
 		});
@@ -351,8 +361,11 @@ $("#postList").on("click","#viewBtn",function(){
 	
 		$("#commentList").on("click","#DeleteBtn",function(){
 			var button=$(this);
-			if(button.attr("btn-lid-user")==$.session.get('user')){
+			
 			if(confirm("Are you sure you want to delete this Comment?")) {
+				console.log(button.attr("btn-lid-user"));
+				console.log($.session.get('user'));
+			if(button.attr("btn-lid-user")==$.session.get('user')){
 			$.ajax({
 			url:"http://localhost:53091/api/Posts/"+ $("#hiddenPostId").val() +"/Comments/"+ button.attr("btn-id"),
 			method:"Delete",
@@ -364,8 +377,9 @@ $("#postList").on("click","#viewBtn",function(){
 					$("#msg").html("Post Successfully Deleted");
 					$("#postId").val("")
 					$("#commentList tbody").html("");
-					$("#upPostId").val("");
-					$("#upPostDetails").val("");
+					$("#upPost").val("");
+					$("#upCommentDetails").val("");
+					$("#msg2").html("");
 				}
 				else{
 					$("#msg").html(xmlhttp.status+":"+ xmlhttp.statusText);
@@ -373,14 +387,11 @@ $("#postList").on("click","#viewBtn",function(){
 				}
 			}
 		});
-		
 		}
-	}
-	else{
-		$("#msg2").html("You are not allowed to delete someones post");
-	}
-
-		
+		else{
+		$("#msg").html("<b>You are not allowed to delete someones Comment</b>");
+		}
+		}
 	});
 //Delete Function for comments Ends here
 
@@ -408,7 +419,7 @@ $("#postList").on("click","#viewBtn",function(){
 				}
 			}
 			else{
-				$("#msg").html("Enter Comment First");
+				$("#msg").html("<b>Enter Comment First</b>");
 			}
 		}
 	});
@@ -436,7 +447,7 @@ $("#commentList").on("click","#loadBtn",function(){
 				$("#msg2").html("");
 				}
 				else{
-						$("#msg2").html("You are not allowed");
+						$("#msg").html("<b>You are not allowed</b>");
 				}
 			}
 				else{
@@ -475,7 +486,7 @@ $("#commentList").on("click","#loadBtn",function(){
 				}
 			}
 			else{
-				$("#msg").html("Fields can't be empty");
+				$("#msg").html("<b>Fields can't be empty</b>");
 			}
 		}
 		});
